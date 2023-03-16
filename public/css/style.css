@@ -86,7 +86,7 @@ a {
   padding: 10px;
   margin-bottom: 15px;
   background-color: var(--light-color);
-  border-radius: 5px;
+  border-radius: 10px;
   overflow-wrap: break-word;
 }
 
