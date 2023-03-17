@@ -5,7 +5,7 @@ import { createServer } from "http";
 import { Server } from "socket.io";
 import moment from "moment";
 import { items, welcomeMsg, orderMsg } from "./public/items.js";
-import { sessionModel } from "./models/sessionModel.js";
+import { order } from "./models/orderModel.js";
 const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
@@ -50,7 +50,7 @@ app.use(express.static(path.join(__dirname, "public")));
 io.on("connection", (socket) => {
   console.log("A user connected");
 
-  console.log(socket.request.session.orderHistory);
+  console.log(socket.request.session);
 
   // Read message recieved from client.
   socket.on("chatMessage", (data) => {
