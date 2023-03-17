@@ -18,14 +18,11 @@ const welcomeMsg = `Select 1 to Place an order
                     Select 99 to checkout order
                     Select 0 to cancel order`;
 
-
 const orderMsg = `
                 Select 97 to see current order
                 Select 99 to checkout order
-                `
+                Select 0 to cancel order
+                `;
 
-module.exports = {
-    items,
-    welcomeMsg,
-    orderMsg
-};
+export { items, welcomeMsg, orderMsg }
+
