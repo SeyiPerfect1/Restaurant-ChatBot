@@ -5,7 +5,7 @@ import { createServer } from "http";
 import { Server } from "socket.io";
 import moment from "moment";
 import { items, welcomeMsg, orderMsg } from "./public/items.js";
-import { order } from "./models/orderModel.js";
+import { Order } from "./models/orderModel.js";
 const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
