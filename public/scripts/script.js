@@ -1,12 +1,7 @@
-import { items } from "../items.js";
+import { items } from "./items.js";
 
 const chatForm = document.getElementById("chat-form");
 const chatMessages = document.querySelector(".chat-messages");
-
-// Get username and room from URL
-// const { username, room } = Qs.parse(location.search, {
-//   ignoreQueryPrefix: true,
-// });
 
 const socket = io();
 
@@ -17,13 +12,6 @@ socket.on("message_from_server", (message) => {
   // Scroll down
   chatMessages.scrollTop = chatMessages.scrollHeight;
 });
-
-// socket.on("message_from_server", (message) => {
-//   outputMessage(message);
-
-//   // Scroll down
-//   chatMessages.scrollTop = chatMessages.scrollHeight;
-// });
 
 // Message submit
 chatForm.addEventListener("submit", (e) => {
@@ -103,7 +91,7 @@ chatForm.addEventListener("submit", (e) => {
         checkoOutKeys = Object.keys(localStorage),
         j = 0,
         checkOutKey;
-      console.log(checkoOutKeys);
+
       for (; (checkOutKey = checkoOutKeys[j]); j++) {
         let quan = "plates";
         if (localStorage.getItem(checkOutKey) === "1") quan = "plate";
@@ -161,21 +149,6 @@ function outputClientMessage(message) {
   div.appendChild(para);
   document.querySelector(".chat-messages").appendChild(div);
 }
-
-// Add room name to DOM
-// function outputRoomName(room) {
-//   roomName.innerText = room;
-// }
-
-// Add users to DOM
-// function outputUsers(users) {
-//   userList.innerHTML = '';
-//   users.forEach((user) => {
-//     const li = document.createElement('li');
-//     li.innerText = user.username;
-//     userList.appendChild(li);
-//   });
-// }
 
 //Prompt the user before leave chat room
 document.getElementById("leave-btn").addEventListener("click", () => {

@@ -4,20 +4,13 @@ import express from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import moment from "moment";
-import { items, welcomeMsg, orderMsg } from "./public/items.js";
-import { Order } from "./models/orderModel.js";
+import { items, welcomeMsg, orderMsg } from "./public/scripts/items.js";
+
 const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   /* options */
 });
-// import cors from "cors";
-
-// app.use(cors())
-//  cors: {
-//     origin: "*",
-//     methods: ["GET", "POST"]
-// }});
 
 import logger from "morgan";
 import path from "path";
@@ -50,7 +43,13 @@ app.use(express.static(path.join(__dirname, "public")));
 io.on("connection", (socket) => {
   console.log("A user connected");
 
-  console.log(socket.request.session);
+  const session = socket.request.session;
+  session.save();
+
+  if (!session.orders) {
+    session.orders = [];
+    session.save();
+  }
 
   // Read message recieved from client.
   socket.on("chatMessage", (data) => {
@@ -69,16 +68,12 @@ io.on("connection", (socket) => {
       case "0":
         setTimeout(() => {
           if (data[1]) {
-            message.data = `Order cancelled successfully
-                          To start a new order,
-                          Select 1 to check list of items available`;
+            message.data = orderMsg[1];
           } else {
-            message.data = `You have no current order
-                            To start a new order,
-                            Select 1 to check list of items available`;
+            message.data = orderMsg[2];
           }
           socket.emit("message_from_server", message);
-        }, 1000);
+        }, 500);
         break;
 
       case "1":
@@ -105,7 +100,7 @@ io.on("connection", (socket) => {
       case "19":
       case "20":
         let selectedOrderMsg =
-          `1 plate ${items[data]} added to current order\n` + orderMsg;
+          `1 plate ${items[data]} added to current order\n` + orderMsg[0];
 
         setTimeout(() => {
           message.data = selectedOrderMsg;
@@ -118,9 +113,7 @@ io.on("connection", (socket) => {
           if (data[1]) {
             message.data = data[1];
           } else {
-            message.data = `You have no current order to cancel
-                            To start a new order,
-                            Select 1 to check list of items available`;
+            message.data = orderMsg[2];
           }
 
           socket.emit("message_from_server", message);
@@ -128,12 +121,11 @@ io.on("connection", (socket) => {
         break;
 
       case "98":
-        const orderHistory = socket.request.session.orderHistory
+        const orderHistory = session.orders;
         if (orderHistory.length != 0) {
-          message.data = orderHistory.join("")
+          message.data = orderHistory.join("");
         } else {
-          message.data = `You have no order history!!!
-                          Select 1 to check list of items available`
+          message.data = orderMsg[3];
         }
         setTimeout(() => {
           socket.emit("message_from_server", message);
@@ -142,15 +134,11 @@ io.on("connection", (socket) => {
 
       case "99":
         if (data[1]) {
-          console.log(socket.request.session) 
-          socket.request.session.orderHistory += data[1]
-          socket.request.session.save()
-          console.log(socket.request.session)
-          message.data = `Order successfully checked out`;
+          session.orders.push(data[1]);
+          console.log(session.orders);
+          message.data = orderMsg[4];
         } else {
-          message.data = `You have no current order to cancel
-                          To start a new order,
-                          Select 1 to check list of items available`;
+          message.data = orderMsg[5];
         }
         setTimeout(() => {
           socket.emit("message_from_server", message);
@@ -159,7 +147,7 @@ io.on("connection", (socket) => {
 
       default:
         setTimeout(() => {
-          message.data = `Seems you entered a wrong input:\n` + welcomeMsg;
+          message.data = orderMsg[6];
           socket.emit("message_from_server", message);
         }, 1000);
     }
@@ -167,7 +155,7 @@ io.on("connection", (socket) => {
 
   // Send a message to the connected client 1 seconds after the connection is created.
   setTimeout(() => {
-    const welcomeMsg = `Good day, pls kindly check the following menu to make order`;
+    const welcomeMsg = orderMsg[7];
     const time = moment().format(" h:mm a");
     const message = {};
     message.data = welcomeMsg;
