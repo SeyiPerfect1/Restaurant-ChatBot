@@ -160,7 +160,7 @@ io.on("connection", (socket) => {
     message.data = welcomeMsg;
     message.time = time;
     socket.emit("message_from_server", message);
-  }, 1000);
+  }, 500);
 
   // Send a menu message to the connected client 2 seconds after the connection is created.
   setTimeout(() => {
@@ -169,7 +169,7 @@ io.on("connection", (socket) => {
     message.data = welcomeMsg;
     message.time = time;
     socket.emit("message_from_server", message);
-  }, 2000);
+  }, 1000);
 
   //Whenever someone disconnects this piece of code executed
   socket.on("disconnect", () => {
