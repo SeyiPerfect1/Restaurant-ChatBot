@@ -81,11 +81,10 @@ io.on("connection", (socket) => {
         for (let i of Object.entries(items)) {
           availableItems += `\n${i}`;
         }
-        console.log(availableItems);
         setTimeout(() => {
           message.data = availableItems;
           socket.emit("message_from_server", message);
-        }, 1000);
+        }, 500);
         break;
 
       case "10":
@@ -105,7 +104,7 @@ io.on("connection", (socket) => {
         setTimeout(() => {
           message.data = selectedOrderMsg;
           socket.emit("message_from_server", message);
-        }, 1000);
+        }, 500);
         break;
 
       case "97":
@@ -117,7 +116,7 @@ io.on("connection", (socket) => {
           }
 
           socket.emit("message_from_server", message);
-        }, 1000);
+        }, 500);
         break;
 
       case "98":
@@ -129,7 +128,7 @@ io.on("connection", (socket) => {
         }
         setTimeout(() => {
           socket.emit("message_from_server", message);
-        }, 1000);
+        }, 500);
         break;
 
       case "99":
@@ -142,14 +141,14 @@ io.on("connection", (socket) => {
         }
         setTimeout(() => {
           socket.emit("message_from_server", message);
-        }, 1000);
+        }, 500);
         break;
 
       default:
         setTimeout(() => {
           message.data = orderMsg[6];
           socket.emit("message_from_server", message);
-        }, 1000);
+        }, 500);
     }
   });
 
@@ -157,7 +156,6 @@ io.on("connection", (socket) => {
   setTimeout(() => {
     const welcomeMsg = orderMsg[7];
     const time = moment().format(" h:mm a");
-    const message = {};
     message.data = welcomeMsg;
     message.time = time;
     socket.emit("message_from_server", message);
@@ -166,15 +164,10 @@ io.on("connection", (socket) => {
   // Send a menu message to the connected client 2 seconds after the connection is created.
   setTimeout(() => {
     const time = moment().format(" h:mm a");
-    const message = {};
     message.data = welcomeMsg;
     message.time = time;
     socket.emit("message_from_server", message);
   }, 2000);
-
-  // socket.on("message_from_server", (socket) => {
-
-  // })
 
   //Whenever someone disconnects this piece of code executed
   socket.on("disconnect", () => {
