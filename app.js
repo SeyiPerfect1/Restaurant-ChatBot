@@ -156,6 +156,7 @@ io.on("connection", (socket) => {
   setTimeout(() => {
     const welcomeMsg = orderMsg[7];
     const time = moment().format(" h:mm a");
+    const message = {};
     message.data = welcomeMsg;
     message.time = time;
     socket.emit("message_from_server", message);
@@ -164,6 +165,7 @@ io.on("connection", (socket) => {
   // Send a menu message to the connected client 2 seconds after the connection is created.
   setTimeout(() => {
     const time = moment().format(" h:mm a");
+    const message = {};
     message.data = welcomeMsg;
     message.time = time;
     socket.emit("message_from_server", message);
