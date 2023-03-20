@@ -77,7 +77,7 @@ io.on("connection", (socket) => {
         break;
 
       case "1":
-        let availableItems = "Enter number to select item:";
+        let availableItems = "Enter corresponding item's number to select item:";
         for (let i of Object.entries(items)) {
           availableItems += `\n${i}`;
         }
