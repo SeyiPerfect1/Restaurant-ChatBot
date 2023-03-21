@@ -1,4 +1,6 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
+@import url("httos://fonts.googleapis.com/css?family=Crimson+Text&display=swap");
+
 
 :root {
   --dark-color-a: #667aff;
@@ -29,6 +31,11 @@ a {
   text-decoration: none;
 }
 
+p {
+  font-family: 'Crimson Text', serif;
+}
+
+
 /* Chat Page */
 
 .chat-container {
@@ -41,6 +48,7 @@ a {
 .chat-header {
   background: var(--dark-color-a);
   color: #fff;
+  font-size: 13px;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   padding: 15px;
@@ -58,7 +66,7 @@ a {
   background: var(--dark-color-b);
   color: #fff;
   padding: 20px 20px 60px;
-  overflow-y: scroll;
+  text-align: center;
 }
 
 .chat-sidebar h2 {
@@ -66,6 +74,7 @@ a {
   background: rgba(0, 0, 0, 0.1);
   padding: 10px;
   margin-bottom: 20px;
+  color: #5cb85c;
 }
 
 .chat-sidebar h3 {
@@ -82,12 +91,25 @@ a {
   overflow-y: scroll;
 }
 
-.chat-messages .message {
+.chat-messages .message1 {
   padding: 10px;
   margin-bottom: 15px;
   background-color: var(--light-color);
   border-radius: 10px;
   overflow-wrap: break-word;
+  width: 50%;
+  animation: messageSlidein 1.5s;
+}
+
+.chat-messages .message2 {
+  padding: 10px;
+  margin-bottom: 15px;
+  margin-left: 80%;
+  background-color: var(--light-color);
+  border-radius: 20px;
+  overflow-wrap: break-word;
+  text-align: center;
+  animation: messageSlidein 1s;
 }
 
 .chat-messages .message .meta {
@@ -138,32 +160,9 @@ a {
   background: var(--dark-color-b);
 }
 
-/* .join-main p {
-  margin-bottom: 20px;
-} */
-
 .join-main .form-control {
   margin-bottom: 20px;
 }
-
-/* .join-main label {
-  display: block;
-  margin-bottom: 5px;
-} */
-
-/* .join-main input[type="text"] {
-  font-size: 16px;
-  padding: 5px;
-  height: 40px;
-  width: 100%;
-}
-
-.join-main select {
-  font-size: 16px;
-  padding: 5px;
-  height: 40px;
-  width: 100%;
-} */
 
 .join-main .btn {
   margin-top: 20px;
@@ -185,8 +184,18 @@ a {
 }
 
 .btn:hover {
-  /* background: var(--dark-color-b); */
-  color: var(--dark-color-b);
+  background: var(--dark-color-a);
+  color: var(--light-color);
+}
+
+@keyframes messageSlidein {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
 
 @media (max-width: 700px) {
@@ -196,5 +205,17 @@ a {
 
   .chat-sidebar {
     display: none;
+  }
+
+  .chat-header {
+    font-size: 8px;
+  }
+
+  .chat-header a {
+    font-size: 12px;
+  }
+
+  .chat-messages .message1 {
+    width: 70%;
   }
 }

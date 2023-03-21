@@ -126,7 +126,7 @@ function outputServerMessage(message) {
   const { data, time } = message;
   console.log(message);
   const div = document.createElement("div");
-  div.classList.add("message");
+  div.classList.add("message1");
   const p = document.createElement("p");
   p.classList.add("meta");
   p.innerHTML += `<span>${time}</span>`;
@@ -140,7 +140,7 @@ function outputServerMessage(message) {
 
 function outputClientMessage(message) {
   const div = document.createElement("div");
-  div.classList.add("message");
+  div.classList.add("message2");
   const p = document.createElement("p");
   p.classList.add("meta");
   const para = document.createElement("p");
